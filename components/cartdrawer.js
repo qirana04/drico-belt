@@ -299,7 +299,7 @@ export default function CartDrawer() {
   const [orderItems, setOrderItems] = useState([])
   const [copied, setCopied] = useState(false)
   const [form, setForm] = useState({
-    name: '', email: '', phone: '', address: '', city: '', zip: ''
+    name: '', email: '', address: '', city: '', zip: ''
   })
   const [errors, setErrors] = useState({})
 
@@ -312,7 +312,6 @@ export default function CartDrawer() {
     const e = {}
     if (!form.name.trim())    e.name = 'Wajib diisi'
     if (!form.email.trim())   e.email = 'Wajib diisi'
-    if (!form.phone.trim())   e.phone = 'Wajib diisi'
     if (!form.address.trim()) e.address = 'Wajib diisi'
     if (!form.city.trim())    e.city = 'Wajib diisi'
     if (!form.zip.trim())     e.zip = 'Wajib diisi'
@@ -343,7 +342,7 @@ export default function CartDrawer() {
     setIsOpen(false)
     setShowCheckout(false)
     setShowSuccess(false)
-    setForm({ name:'', email:'', phone:'', address:'', city:'', zip:'' })
+    setForm({ name:'', email:'', address:'', city:'', zip:'' })
     setErrors({})
     setCopied(false)
   }
@@ -363,9 +362,8 @@ export default function CartDrawer() {
 
 *Order ID:* ${orderId}
 *Nama:* ${form.name}
-*No. WhatsApp:* ${form.phone}
 *Email:* ${form.email}
-*Alamat:* ${form.address}, ${form.city} ${form.zip}
+*Alamat Kirim:* ${form.address}, ${form.city} ${form.zip}
 
 *Detail Pesanan:*
 ${waItemsText}
@@ -375,7 +373,7 @@ ${waItemsText}
 
 Saya sudah melakukan transfer pembayaran via QRIS. Mohon segera dicek dan diproses. Terima kasih!`
 
-  const waUrl = `https://wa.me/6281234567890?text=${encodeURIComponent(waMessage)}`
+  const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(waMessage)}`
 
   return (
     <>
@@ -465,27 +463,15 @@ Saya sudah melakukan transfer pembayaran via QRIS. Mohon segera dicek dan dipros
                   style={errors.name ? { borderColor: '#c0392b' } : {}}
                 />
               </div>
-              <div className="form-grid2">
-                <div className="form-row">
-                  <label className="form-label">Email</label>
-                  <input
-                    className="form-input"
-                    name="email" type="email" value={form.email}
-                    onChange={handleChange}
-                    placeholder="email@domain.com"
-                    style={errors.email ? { borderColor: '#c0392b' } : {}}
-                  />
-                </div>
-                <div className="form-row">
-                  <label className="form-label">Phone</label>
-                  <input
-                    className="form-input"
-                    name="phone" type="tel" value={form.phone}
-                    onChange={handleChange}
-                    placeholder="08xx"
-                    style={errors.phone ? { borderColor: '#c0392b' } : {}}
-                  />
-                </div>
+              <div className="form-row">
+                <label className="form-label">Email</label>
+                <input
+                  className="form-input"
+                  name="email" type="email" value={form.email}
+                  onChange={handleChange}
+                  placeholder="email@domain.com"
+                  style={errors.email ? { borderColor: '#c0392b' } : {}}
+                />
               </div>
               <div className="form-row">
                 <label className="form-label">Shipping Address</label>
@@ -582,7 +568,7 @@ Saya sudah melakukan transfer pembayaran via QRIS. Mohon segera dicek dan dipros
                 </div>
                 <div className="qris-inv-row" style={{ marginTop: '0.35rem' }}>
                   <span className="qris-inv-label">ATAS NAMA</span>
-                  <span className="qris-inv-val">{form.name} ({form.phone})</span>
+                  <span className="qris-inv-val">{form.name}</span>
                 </div>
               </div>
 
@@ -591,7 +577,7 @@ Saya sudah melakukan transfer pembayaran via QRIS. Mohon segera dicek dan dipros
                 <div className="qris-card-head">
                   <span className="qris-merchant-badge">QRIS RESMI</span>
                   <span className="qris-merchant-name">DRICO OFFICIAL STORE</span>
-                  <span className="qris-merchant-nmid">NMID: ID1020038472910</span>
+                  <span className="qris-merchant-nmid">VERIFIED MERCHANT</span>
                 </div>
                 <div className="qris-image-wrapper">
                   <Image
