@@ -28,6 +28,18 @@ export function CartProvider({ children }) {
     setItems(prev => prev.filter(i => !(i.id === id && i.variant === variant)))
   }, [])
 
+  const updateQty = useCallback((id, variant, deltaOrValue) => {
+    setItems(prev => prev.map(i => {
+      if (i.id === id && i.variant === variant) {
+        const nextQty = typeof deltaOrValue === 'function'
+          ? deltaOrValue(i.qty)
+          : deltaOrValue
+        return { ...i, qty: Math.max(1, nextQty) }
+      }
+      return i
+    }))
+  }, [])
+
   const clearCart = useCallback(() => setItems([]), [])
 
   const total = items.reduce((sum, i) => sum + i.price * i.qty, 0)
@@ -35,7 +47,7 @@ export function CartProvider({ children }) {
 
   return (
     <CartContext.Provider value={{
-      items, addItem, removeItem, clearCart,
+      items, addItem, removeItem, updateQty, clearCart,
       total, count, isOpen, setIsOpen
     }}>
       {children}

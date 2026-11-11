@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
@@ -38,7 +38,7 @@ const THUMB_IMAGES = ['/belt-hero.png', '/belt-detail.png', '/belt-hero.png', '/
 
 function fmt(n) { return 'Rp ' + n.toLocaleString('id-ID') }
 
-export default function DetailPage() {
+function DetailContent() {
   const params   = useSearchParams()
   const variantId = params.get('v') || 'belt-gold'
   const variant  = VARIANTS[variantId] || VARIANTS['belt-gold']
@@ -109,22 +109,20 @@ export default function DetailPage() {
       <div className="cursor-ring" ref={ringRef} />
       <Toast />
 
-      {/* Detail breadcrumb nav */}
-      <div className="detail-nav">
-        <Link href="/" className="back-btn">Back to Shop</Link>
-        <div className="detail-breadcrumb">DRICO / Signature Belt / {variant.label}</div>
-      </div>
-
       <div className="detail-body">
         {/* ── GALLERY ── */}
         <div className="detail-gallery">
           <div className="gallery-main">
+            <Link href="/" className="gallery-back-btn" aria-label="Back to Shop">
+              <span className="back-arrow">←</span> Back to Shop
+            </Link>
             <Image
               src={imgSrc}
               alt="DRICO Signature Belt"
               fill
               className="gallery-img"
               style={{ objectFit:'cover', objectPosition:'center', filter: imgFilter }}
+              priority
             />
           </div>
           <div className="gallery-thumbs">
@@ -204,12 +202,20 @@ export default function DetailPage() {
 
       <footer>
         <div className="foot-brand">DRICO<small>by jakeable_</small></div>
-        <div className="foot-copy">© 2025 DRICO — All Rights Reserved</div>
+        <div className="foot-copy">© 2026 qrnmaulidahkm_ — All Rights Reserved</div>
         <div className="foot-social">
           <a href="#" className="soc-link">Instagram</a>
           <a href="#" className="soc-link">TikTok</a>
         </div>
       </footer>
     </>
+  )
+}
+
+export default function DetailPage() {
+  return (
+    <Suspense fallback={<div style={{ minHeight: '100vh', background: '#0e0d0c' }} />}>
+      <DetailContent />
+    </Suspense>
   )
 }

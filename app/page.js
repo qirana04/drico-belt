@@ -20,8 +20,8 @@ const PRODUCTS = [
     name: 'DRICO SIGNATURE BELT',
     variant: 'Black & Silver',
     price: 385000,
-    image: '/belt-detail.png',
-    imageStyle: { filter: 'brightness(0.65) saturate(0.15) contrast(1.1)' },
+    image: '/belt-silver.jpg',
+    imageStyle: { objectPosition: 'center 25%', filter: 'none' },
   },
 ]
 
@@ -308,7 +308,7 @@ export default function HomePage() {
         <div className="foot-brand">
           DRICO<small>by jakeable_</small>
         </div>
-        <div className="foot-copy">© 2026 DRICO — All Rights Reserved</div>
+        <div className="foot-copy">© 2026 qrnmaulidahkm_ — All Rights Reserved</div>
         <div className="foot-social">
           <a href="https://www.instagram.com/driftcolony?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="soc-link">Instagram</a>
           <a href="https://www.tiktok.com/@driftcolony?is_from_webapp=1&sender_device=pc" className="soc-link">TikTok</a>
